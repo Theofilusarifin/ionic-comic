@@ -15,10 +15,37 @@ export class AppComponent {
     private router: Router
   ) {}
 
+  // Initialize variable
+  username: string = '';
+  is_login = true;
+  is_register = false;
+
   // Variable for login
   login_email: string = '';
   login_password: string = '';
   login_error: string = '';
+
+  // Variable for register
+  register_username: string = '';
+  register_email: string = '';
+  register_password: string = '';
+  register_re_password: string = '';
+  register_error: string = '';
+
+  async ngOnInit() {
+    await this.storage.create();
+    this.username = await this.storage.get('username');
+  }
+
+  showLogin() {
+    this.is_register = false;
+    this.is_login = true;
+  }
+
+  showRegister() {
+    this.is_login = false;
+    this.is_register = true;
+  }
 
   // Login Function
   login() {
@@ -35,14 +62,6 @@ export class AppComponent {
         }
       });
   }
-
-  // Variable for login
-  register_username: string = '';
-  register_email: string = '';
-  register_password: string = '';
-  register_re_password: string = '';
-  register_error: string = '';
-
   // Register function
   register() {
     if (this.register_password == this.register_re_password) {
@@ -67,5 +86,20 @@ export class AppComponent {
     else {
       this.register_error = 'Password does not match!';
     }
+  }
+
+  // Logout function
+  async logout() {
+    await this.storage.remove('user_id');
+    // Reset Variable
+    this.username = '';
+    this.login_email = '';
+    this.login_password = '';
+    this.login_error = '';
+    this.register_username = '';
+    this.register_email = '';
+    this.register_password = '';
+    this.register_re_password = '';
+    this.register_error = '';
   }
 }
