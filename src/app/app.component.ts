@@ -40,7 +40,7 @@ export class AppComponent {
   showLogin() {
     this.is_register = false;
     this.is_login = true;
-    this.login_error = "";
+    this.login_error = '';
     this.register_error = '';
   }
 
@@ -91,6 +91,7 @@ export class AppComponent {
       this.register_error = 'Password does not match!';
     }
   }
+
 
   // Logout function
   async logout() {
