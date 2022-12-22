@@ -40,11 +40,15 @@ export class AppComponent {
   showLogin() {
     this.is_register = false;
     this.is_login = true;
+    this.login_error = "";
+    this.register_error = '';
   }
 
   showRegister() {
     this.is_login = false;
     this.is_register = true;
+    this.login_error = '';
+    this.register_error = '';
   }
 
   // Login Function
