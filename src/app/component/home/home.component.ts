@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from 'src/app/app.component';
 import { ComicService } from 'src/app/service/comic.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { ComicService } from 'src/app/service/comic.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(public cs: ComicService) {}
+  constructor(public cs: ComicService, public ac: AppComponent) {}
 
   ngOnInit() {
     this.getPopular();
@@ -31,7 +32,7 @@ export class HomeComponent implements OnInit {
         // convert last update into proper string
         data.comics.forEach(
           (element: { [x: string]: string | number | Date }) => {
-            element['latest_update'] = this.last_update(
+            element['latest_update'] = this.ac.last_update(
               element['latest_update']
             );
           }
@@ -51,50 +52,14 @@ export class HomeComponent implements OnInit {
         // convert last update into proper string
         data.comics.forEach(
           (element: { [x: string]: string | number | Date }) => {
-            element['latest_update'] = this.last_update(
+            element['latest_update'] = this.ac.last_update(
               element['latest_update']
             );
           }
         );
         // Assign Data
         this.latest_comics = data.comics;
-        console.log(this.latest_comics);
       }
     });
   }
-
-  last_update = (latest_update: string | number | Date) => {
-    // Converting datetime
-    let difference =
-      ((Number(new Date()) - Number(new Date(latest_update))) / 1000) | 0;
-    let timePassed = `${difference} seconds ago`;
-
-    if (difference >= 60) {
-      difference /= 60;
-      timePassed = `${difference | 0} minutes ago`;
-
-      if (difference >= 60) {
-        difference /= 60;
-        timePassed = `${difference | 0} hours ago`;
-
-        if (difference >= 24) {
-          difference /= 24;
-          timePassed = `${difference | 0} days ago`;
-
-          if (difference >= 30) {
-            difference /= 30;
-            timePassed = `${difference | 0} months ago`;
-
-            if (difference >= 365) {
-              difference /= 365;
-              timePassed = `${difference | 0} years ago`;
-            }
-          }
-        }
-      }
-    }
-
-    // Assign value
-    return timePassed;
-  };
 }

@@ -14,7 +14,7 @@
     style="margin: 0px 15px"
   >
     <ion-card
-      style="background: transparent; margin: 0px; margin-top: 20px"
+      style="background: transparent; box-shadow: none; margin: 0px; margin-top: 20px"
       routerLink="/comic/{{ comic.id }}"
     >
       <img
@@ -54,7 +54,7 @@
   <ion-content style="border: 1px solid #eae9e8"></ion-content>
 </ion-content>
 <!-- Comics -->
-<ion-grid style="padding: 0; margin: 0" *ngIf="latest_comics">
+<ion-grid style="padding: 10px 5px; margin: 0" *ngIf="latest_comics">
   <ion-row class="ion-padding-top" style="margin: 0">
     <ion-col
       size="6"
@@ -62,7 +62,7 @@
       *ngFor="let comic of latest_comics; let i = index"
     >
       <ion-card
-        style="background: transparent"
+        style="background: transparent; box-shadow: none;"
         routerLink="/comic/{{ comic.id }}"
       >
         <img
@@ -76,10 +76,10 @@
           "
         />
         <ion-card-header style="padding: 0; margin-top: 10px">
-          <ion-card-subtitle *ngIf="comic.name.length > 33"
-            >{{ comic.name.substring(0, 33) }}...</ion-card-subtitle
+          <ion-card-subtitle *ngIf="comic.name.length > 20"
+            >{{ comic.name.substring(0, 20) }}...</ion-card-subtitle
           >
-          <ion-card-subtitle *ngIf="comic.name.length <= 33">{{
+          <ion-card-subtitle *ngIf="comic.name.length <= 20">{{
             comic.name
           }}</ion-card-subtitle>
         </ion-card-header>

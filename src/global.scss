@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -26,22 +26,8 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 /* Your app custom styles here */
-@font-face {
-	font-family: montserrat-bold;
-	src: url("..assets/fonts/Montserrat-Bold.ttf");
-}
 
 @font-face {
-	font-family: montserrat;
-	src: url("..assets/fonts/Montserrat-Medium.ttf");
-}
-
-@font-face {
-	font-family: montserrat-medium;
-	src: url("..assets/fonts/Montserrat-Medium.ttf");
-}
-
-@font-face {
-	font-family: montserrat-regular;
-	src: url("..assets/fonts/Montserrat-Regular.ttf");
+  font-family: montserrat;
+  src: url("./assets/fonts/Montserrat-Medium.ttf");
 }

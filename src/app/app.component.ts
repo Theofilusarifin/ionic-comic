@@ -17,6 +17,7 @@ export class AppComponent {
 
   // Initialize variable
   username: string = '';
+  email: string = '';
   is_login = true;
   is_register = false;
 
@@ -35,6 +36,7 @@ export class AppComponent {
   async ngOnInit() {
     await this.storage.create();
     this.username = await this.storage.get('username');
+    this.email = await this.storage.get('email');
   }
 
   showLogin() {
@@ -56,10 +58,11 @@ export class AppComponent {
     this.us
       .checkUser(this.login_email, this.login_password)
       .subscribe((data) => {
+        console.log(data);
         if (data['result'] == 'success') {
           // Redirect to home
-          this.storage.set('email', this.register_email);
-          this.storage.set('username', data['username']);
+          this.email = this.login_email;
+          this.username = data['username'];
           this.router.navigate(['/home']);
         } else {
           this.login_error = data['message'];
@@ -78,8 +81,8 @@ export class AppComponent {
         .subscribe((data) => {
           if (data['result'] == 'success') {
             // Redirect to home
-            this.storage.set('email', this.register_email);
-            this.storage.set('username', data['username']);
+            this.email = this.register_email;
+            this.username = this.register_username;
             this.router.navigate(['/home']);
           } else {
             this.register_error = data['message'];
@@ -92,10 +95,11 @@ export class AppComponent {
     }
   }
 
-
   // Logout function
   async logout() {
-    await this.storage.remove('user_id');
+    this.email = '';
+    this.username = '';
+
     // Reset Variable
     this.username = '';
     this.login_email = '';
@@ -107,4 +111,39 @@ export class AppComponent {
     this.register_re_password = '';
     this.register_error = '';
   }
+
+  // Converting datetime
+  last_update = (latest_update: string | number | Date) => {
+    let difference =
+      ((Number(new Date()) - Number(new Date(latest_update))) / 1000) | 0;
+    let timePassed = `${difference} seconds ago`;
+
+    if (difference >= 60) {
+      difference /= 60;
+      timePassed = `${difference | 0} minutes ago`;
+
+      if (difference >= 60) {
+        difference /= 60;
+        timePassed = `${difference | 0} hours ago`;
+
+        if (difference >= 24) {
+          difference /= 24;
+          timePassed = `${difference | 0} days ago`;
+
+          if (difference >= 30) {
+            difference /= 30;
+            timePassed = `${difference | 0} months ago`;
+
+            if (difference >= 365) {
+              difference /= 365;
+              timePassed = `${difference | 0} years ago`;
+            }
+          }
+        }
+      }
+    }
+
+    // Assign value
+    return timePassed;
+  };
 }

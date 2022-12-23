@@ -1,3 +1,58 @@
-<p>
-  bookmark works!
-</p>
+<!-- Favorited Comic -->
+<ion-card-title class="ion-padding-start ion-padding-top"
+  >Favorite Comic</ion-card-title
+>
+<ion-content class="ion-padding" style="height: fit-content">
+  <ion-content style="border: 1px solid #eae9e8"></ion-content>
+</ion-content>
+<!-- Comics -->
+<ion-grid style="padding: 10px 5px; margin: 0" *ngIf="favorite_comics">
+  <ion-row class="ion-padding-top" style="margin: 0">
+    <ion-col
+      size="6"
+      style="padding: 0; margin: 0"
+      *ngFor="let comic of favorite_comics; let i = index"
+    >
+      <ion-card
+        style="background: transparent; box-shadow: none;"
+        routerLink="/comic/{{ comic.id }}"
+      >
+        <img
+          src="{{ comic.url_poster }}"
+          style="
+            max-width: 100%;
+            min-height: 240px;
+            max-height: 240px;
+            height: auto;
+            object-fit: cover;
+          "
+        />
+        <ion-card-header style="padding: 0; margin-top: 10px">
+          <ion-card-subtitle *ngIf="comic.name.length > 20"
+            >{{ comic.name.substring(0, 20) }}...</ion-card-subtitle
+          >
+          <ion-card-subtitle *ngIf="comic.name.length <= 20">{{
+            comic.name
+          }}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content style="padding: 0">
+          <ion-grid style="padding: 0; margin: 0">
+            <ion-row style="padding: 10px 0px 5px 0px; margin: 0">
+              <ion-col size="12" style="padding: 0; margin: 0"
+                ><ion-badge color="tertiary" style="padding: 5px 10px;"
+                  >Chapter {{ comic.comic_chapter }}</ion-badge
+                ></ion-col
+              >
+            </ion-row>
+            <ion-row style="padding: 0; margin: 0">
+              <ion-col size="12" style="padding: 0; margin: 0; font-size: 12px"
+                >{{ comic.latest_update }}</ion-col
+              >
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card></ion-col
+    >
+  </ion-row>
+</ion-grid>
