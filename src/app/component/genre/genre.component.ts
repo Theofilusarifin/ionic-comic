@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GenreService } from 'src/app/service/genre.service';
 
 @Component({
   selector: 'app-genre',
@@ -6,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./genre.component.scss'],
 })
 export class GenreComponent implements OnInit {
+  constructor(public gs: GenreService) {}
 
-  constructor() { }
+  ngOnInit() {
+    this.getAll()
+  }
 
-  ngOnInit() {}
-
+  // Get Genres 
+  genres = null;
+  async getAll() {
+    this.gs.getAll().subscribe((data) => {
+      if (data.result == 'success') {
+        // Assign Data
+        this.genres = data.genres;
+      }
+    });
+  }
 }

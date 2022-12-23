@@ -1,3 +1,22 @@
-<p>
-  genre works!
-</p>
+<!-- genre -->
+<ion-card-title class="ion-padding-start ion-padding-top"
+  >Genre List</ion-card-title
+>
+<ion-content class="ion-padding" style="height: fit-content">
+  <ion-content style="border: 1px solid #eae9e8"></ion-content>
+</ion-content>
+
+<!-- List Genre -->
+<ion-grid style="padding: 10px 5px; margin: 0;" *ngIf="genres">
+  <ion-row class="ion-padding-top" style="margin: 0">
+    <ion-col
+      size="4"
+      style="padding: 7px 15px; margin: 0"
+      *ngFor="let genre of genres; let i = index"
+    >
+      <ion-badge color="tertiary" style="padding: 10px 0px; width: 100%;" routerLink="/genre/{{ genre.id }}">{{
+        genre.name
+      }}</ion-badge>
+    </ion-col>
+  </ion-row>
+</ion-grid>
