@@ -1,56 +1,101 @@
+<!-- Popular Comic -->
 <ion-card-title class="ion-padding-start">Popular This Week</ion-card-title>
 <ion-content class="ion-padding" style="height: fit-content">
   <ion-content style="border: 1px solid #eae9e8"></ion-content>
 </ion-content>
-<ion-slides [options]="pupolarOpt" class="ion-padding-top" *ngIf="popular_comics">
-  <ion-slide *ngFor="let comic of popular_comics; let i = index">
-    <ion-card style="background: transparent;" routerLink='/comic/{{ comic.id }}'>
+<!-- Comics -->
+<ion-slides
+  [options]="pupolarOpt"
+  class="ion-padding-top"
+  *ngIf="popular_comics"
+>
+  <ion-slide
+    *ngFor="let comic of popular_comics; let i = index"
+    style="margin: 0px 15px"
+  >
+    <ion-card
+      style="background: transparent; margin: 0px; margin-top: 20px"
+      routerLink="/comic/{{ comic.id }}"
+    >
       <img
-        alt="Silhouette of mountains"
         src="{{ comic.url_poster }}"
         style="
           max-width: 100%;
-          min-height: 240px;
-          max-height: 240px;
+          min-height: 180px;
+          max-height: 180px;
           height: auto;
           object-fit: cover;
         "
       />
-      <ion-card-header style="margin: 0; padding: 10px 0px 0px 0px; text-align: left; line-height: 1.5;">
-        <ion-card-subtitle>{{ comic.name }}</ion-card-subtitle>
+      <ion-card-header
+        style="
+          margin: 0;
+          padding: 10px 0px 0px 0px;
+          text-align: left;
+          line-height: 1.5;
+        "
+      >
+        <ion-card-subtitle *ngIf="comic.name.length > 23"
+          >{{ comic.name.substring(0, 23) }}...</ion-card-subtitle
+        >
+        <ion-card-subtitle *ngIf="comic.name.length <= 23">{{
+          comic.name
+        }}</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
   </ion-slide>
 </ion-slides>
-<ion-card-title class="ion-padding-start ion-padding-top"
+
+<!-- Latest Comic -->
+<ion-card-title class="ion-padding-start ion-padding-top ion-margin-top"
   >Latest Update</ion-card-title
 >
 <ion-content class="ion-padding" style="height: fit-content">
   <ion-content style="border: 1px solid #eae9e8"></ion-content>
 </ion-content>
-
-<ion-grid style="padding: 0; margin: 0">
+<!-- Comics -->
+<ion-grid style="padding: 0; margin: 0" *ngIf="latest_comics">
   <ion-row class="ion-padding-top" style="margin: 0">
-    <ion-col size="6" style="padding: 0; margin: 0"
-      ><ion-card>
+    <ion-col
+      size="6"
+      style="padding: 0; margin: 0"
+      *ngFor="let comic of latest_comics; let i = index"
+    >
+      <ion-card
+        style="background: transparent"
+        routerLink="/comic/{{ comic.id }}"
+      >
         <img
-          alt="Silhouette of mountains"
-          src="https://ionicframework.com/docs/img/demos/card-media.png"
+          src="{{ comic.url_poster }}"
+          style="
+            max-width: 100%;
+            min-height: 240px;
+            max-height: 240px;
+            height: auto;
+            object-fit: cover;
+          "
         />
-        <ion-card-header style="padding-bottom: 0">
-          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        <ion-card-header style="padding: 0; margin-top: 10px">
+          <ion-card-subtitle *ngIf="comic.name.length > 33"
+            >{{ comic.name.substring(0, 33) }}...</ion-card-subtitle
+          >
+          <ion-card-subtitle *ngIf="comic.name.length <= 33">{{
+            comic.name
+          }}</ion-card-subtitle>
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-card-content style="padding: 0">
           <ion-grid style="padding: 0; margin: 0">
             <ion-row style="padding: 10px 0px 5px 0px; margin: 0">
               <ion-col size="12" style="padding: 0; margin: 0"
-                ><ion-badge color="tertiary">Chapter 1</ion-badge></ion-col
+                ><ion-badge color="tertiary" style="padding: 5px 10px;"
+                  >Chapter {{ comic.comic_chapter }}</ion-badge
+                ></ion-col
               >
             </ion-row>
             <ion-row style="padding: 0; margin: 0">
               <ion-col size="12" style="padding: 0; margin: 0; font-size: 12px"
-                >2 Months Ago</ion-col
+                >{{ comic.latest_update }}</ion-col
               >
             </ion-row>
           </ion-grid>
