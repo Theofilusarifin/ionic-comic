@@ -28,11 +28,11 @@
     </ion-col>
   </ion-row>
 </ion-grid>
-<!-- Comic Detail Section -->
 <ion-grid>
-  <!-- Rating -->
+  <!-- Comic Detail Section -->
   <ion-card>
     <ion-row style="display: flex; align-items: center">
+      <!-- Rating -->
       <ion-col size="7" style="display: flex; justify-content: center">
         <!-- star 1 -->
         <ion-icon
@@ -159,19 +159,125 @@
             <ion-row style="margin: 0">
               <ion-col
                 size="4"
-                style="padding: 3px 15px 0px 0px; margin: 0"
-                *ngFor="let genre of comic_genres; let i = index"
+                style="padding: 0px 10px 0px 0px; margin: 0"
+                *ngFor="let genre of comic_genres"
               >
-                <ion-badge
+                <ion-button
+                  fill="outline"
                   color="tertiary"
-                  style="padding: 10px 0px; width: 100%"
-                  >{{ genre.name }}</ion-badge
+                  style="padding: 5px 0px; width: 100%"
+                  >{{ genre.name }}</ion-button
                 >
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card-content>
+        <!-- Comment and Favorite -->
+        <ion-grid style="padding: 0; margin: 0">
+          <ion-row class="ion-padding-vertical">
+            <!-- Comment -->
+            <ion-col
+              size="6"
+              style="
+                padding: 3px 0px 0px 0px;
+                margin: 0;
+                text-align: center;
+                border-right: solid rgba(255, 255, 255, 0.13) 1px;
+              "
+            >
+              <ion-icon
+                name="chatbox"
+                color="tertiary"
+                style="font-size: 30px"
+              ></ion-icon>
+              <h6 style="color: #fefefe">{{ comic_total_comment }} Comments</h6>
+            </ion-col>
+            <!-- Favorite -->
+            <ion-col
+              size="6"
+              style="padding: 3px 0px 0px 0px; margin: 0; text-align: center"
+            >
+              <ion-icon
+                name="heart"
+                color="tertiary"
+                style="font-size: 30px"
+              ></ion-icon>
+              <h6 style="color: #fefefe">
+                {{ comic_total_favorite }} Favorites
+              </h6>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-padding-vertical ion-margin-bottom">
+            <!-- First Chapter -->
+            <ion-col
+              size="6"
+              class="ion-padding-end"
+              style="margin: 0; text-align: right"
+            >
+              <ion-button
+                color="tertiary"
+                routerLink="/comic/{{ comic_id }}/chapter/{{
+                  first_chapter_id
+                }}"
+                >Read First</ion-button
+              >
+            </ion-col>
+            <!-- Last Chapter -->
+            <ion-col
+              size="6"
+              class="ion-padding-start"
+              style="margin: 0; text-align: left"
+            >
+              <ion-button
+                color="tertiary"
+                routerLink="/comic/{{ comic_id }}/chapter/{{ last_chapter_id }}"
+                >Read Last</ion-button
+              >
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-col>
     </ion-row>
+  </ion-card>
+  <!-- Details -->
+  <ion-card>
+    <!-- Summary -->
+    <h5 class="ion-padding-start ion-padding-top" style="color: white">
+      Summary
+    </h5>
+    <ion-card-content>
+      {{ comic_summary }}
+    </ion-card-content>
+    <!-- List Chapter -->
+    <h5 class="ion-padding-start" style="color: white">
+      Latest Chapter Release
+    </h5>
+    <ion-grid class="ion-padding-horizontal ion-padding-bottom">
+      <ion-row *ngFor="let chapter of comic_chapters">
+        <ion-col>
+          <a
+            style="color: #6a64ff; text-decoration: none"
+            routerLink="/comic/{{ comic_id }}/chapter/{{ chapter.id }}"
+          >
+            Chapter {{ chapter.number }}
+          </a>
+        </ion-col>
+        <ion-col style="text-align: center"
+          >{{ chapter.total_view }} views</ion-col
+        >
+        <ion-col style="text-align: center">{{ chapter.release_date }}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <!-- User Section -->
+  <ion-card>
+    <!-- Rating -->
+    <h5 class="ion-padding-start ion-padding-top" style="color: white">
+      Rating
+    </h5>
+    <!-- Comments -->
+    <h5 class="ion-padding-start" style="color: white">Comments</h5>
   </ion-card>
 </ion-grid>

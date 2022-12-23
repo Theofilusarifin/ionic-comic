@@ -24,6 +24,8 @@ export class DetailcomicComponent implements OnInit {
 
   // Comic detail
   comic_id = null;
+  first_chapter_id = null;
+  last_chapter_id = null;
   comic_name = null;
   comic_author = null;
   comic_status = null;
@@ -32,8 +34,8 @@ export class DetailcomicComponent implements OnInit {
   comic_url_poster = null;
   comic_total_comment = null;
   comic_total_favorite = null;
-  comic_avg_rating:number = 0;
-  favorited:boolean = false;
+  comic_avg_rating: number = 0;
+  favorited: boolean = false;
 
   // comic chapters
   comic_chapters = null;
@@ -51,6 +53,8 @@ export class DetailcomicComponent implements OnInit {
         // Assign Data
         // Comic detail
         this.comic_id = data.comic.id;
+        this.first_chapter_id = data.first_chapter.id;
+        this.last_chapter_id = data.last_chapter.id;
         this.comic_name = data.comic.name;
         this.comic_author = data.comic.author;
         this.comic_status = data.comic.status;
@@ -59,7 +63,19 @@ export class DetailcomicComponent implements OnInit {
         this.comic_url_poster = data.comic.url_poster;
         this.comic_total_comment = data.all_comment;
         this.comic_total_favorite = data.favorite.total;
-        this.comic_avg_rating = Math.floor(parseFloat((data.rating.total_rating / data.rating.banyak_rating).toFixed(2)));
+        this.comic_avg_rating = Math.floor(
+          parseFloat(
+            (data.rating.total_rating / data.rating.banyak_rating).toFixed(2)
+          )
+        );
+        // convert last update into proper string
+        data.chapters.forEach(
+          (element: { [x: string]: string | number | Date }) => {
+            element['release_date'] = this.ac.last_update(
+              element['release_date']
+            );
+          }
+        );
         // comic chapters
         this.comic_chapters = data.chapters;
         // comic comments
@@ -77,8 +93,8 @@ export class DetailcomicComponent implements OnInit {
   // Check Favorite Comic
   async checkFavorite(email: string, comic_id: any) {
     this.us.checkFavorite(email, comic_id).subscribe((data) => {
-      if (data.result == "success"){
-        this.favorited = (data.checked != "") ? true : false
+      if (data.result == 'success') {
+        this.favorited = data.checked != '' ? true : false;
       }
     });
   }
