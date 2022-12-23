@@ -6,9 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  pupolarOpt = {
+    direction: 'horizontal',
+    slidesPerView: 2,
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  };
+
 
   ngOnInit() {}
-
 }

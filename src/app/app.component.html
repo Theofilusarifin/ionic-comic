@@ -8,12 +8,12 @@
 
   <ion-content *ngIf="is_login">
     <ion-card class="ion-margin">
-      <ion-item>
+      <ion-item style="cursor: pointer">
         <ion-input type="text" placeholder="Email" [(ngModel)]="login_email">
         </ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item style="cursor: pointer">
         <ion-input
           type="password"
           placeholder="Password"
@@ -32,7 +32,7 @@
       >
       <ion-chip *ngIf="login_error">{{ login_error }}</ion-chip>
 
-      <ion-item>
+      <ion-item style="cursor: pointer">
         <ion-label (click)="showRegister()" class="ion-text-center"
           >Don't have any Account? Register Now!
         </ion-label>
@@ -42,21 +42,21 @@
 
   <ion-content *ngIf="is_register">
     <ion-card class="ion-margin">
-      <ion-item>
+      <ion-item style="cursor: pointer">
         <ion-input
           type="text"
           placeholder="Username"
           [(ngModel)]="register_username"
         ></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item style="cursor: pointer">
         <ion-input
           type="text"
           placeholder="Email"
           [(ngModel)]="register_email"
         ></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item style="cursor: pointer">
         <ion-input
           type="password"
           placeholder="Password"
@@ -64,7 +64,7 @@
         ></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item style="cursor: pointer">
         <ion-input
           type="password"
           placeholder="Retype Password"
@@ -81,7 +81,7 @@
       >
       <ion-chip *ngIf="register_error">{{ register_error }}</ion-chip>
 
-      <ion-item>
+      <ion-item style="cursor: pointer">
         <ion-label (click)="showLogin()" class="ion-text-center"
           >Already have Account? Login Here!</ion-label
         >
@@ -93,7 +93,7 @@
 <ion-app *ngIf="username">
   <ion-menu content-id="content">
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="tertiary">
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -102,49 +102,49 @@
       <ion-menu-toggle>
         <ion-list>
           <!-- Home -->
-          <ion-item>
+          <ion-item style="cursor: pointer">
             <ion-icon name="home" color="tertiary"></ion-icon>
             <ion-label routerLink="/home" class="ion-padding-start"
               >Home</ion-label
             >
           </ion-item>
           <!-- Search -->
-          <ion-item>
+          <ion-item style="cursor: pointer">
             <ion-icon name="search" color="tertiary"></ion-icon>
             <ion-label routerLink="/search" class="ion-padding-start"
               >Search</ion-label
             >
           </ion-item>
           <!-- Favorite -->
-          <ion-item>
+          <ion-item style="cursor: pointer">
             <ion-icon name="bookmark" color="tertiary"></ion-icon>
             <ion-label routerLink="/bookmarked" class="ion-padding-start"
               >Favorite</ion-label
             >
           </ion-item>
           <!-- Genre -->
-          <ion-item>
+          <ion-item style="cursor: pointer">
             <ion-icon name="reader" color="tertiary"></ion-icon>
             <ion-label routerLink="/genre" class="ion-padding-start"
               >Genres</ion-label
             >
           </ion-item>
           <!-- Completed -->
-          <ion-item>
+          <ion-item style="cursor: pointer">
             <ion-icon name="checkmark-circle" color="tertiary"></ion-icon>
             <ion-label routerLink="/completed" class="ion-padding-start"
               >Completed</ion-label
             >
           </ion-item>
           <!-- Random -->
-          <ion-item>
+          <ion-item style="cursor: pointer">
             <ion-icon name="shuffle" color="tertiary"></ion-icon>
             <ion-label routerLink="/random" class="ion-padding-start"
               >Random</ion-label
             >
           </ion-item>
           <!-- Log out -->
-          <ion-item>
+          <ion-item style="cursor: pointer">
             <ion-icon name="log-out" color="tertiary"></ion-icon>
             <ion-label
               type="submit"
@@ -158,8 +158,8 @@
     </ion-content>
   </ion-menu>
 
-  <ion-header>
-    <ion-toolbar>
+  <ion-header class="ion-padding-bottom ion-margin-bottom">
+    <ion-toolbar color="tertiary">
       <ion-buttons slot="start">
         <ion-menu-button autoHide="false"></ion-menu-button>
       </ion-buttons>
@@ -171,6 +171,4 @@
   <ion-content>
     <router-outlet id="content"> </router-outlet>
   </ion-content>
-
-  <ion-router-outlet></ion-router-outlet>
 </ion-app>

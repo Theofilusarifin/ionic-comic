@@ -24,3 +24,24 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+/* Your app custom styles here */
+@font-face {
+	font-family: montserrat-bold;
+	src: url("..assets/fonts/Montserrat-Bold.ttf");
+}
+
+@font-face {
+	font-family: montserrat;
+	src: url("..assets/fonts/Montserrat-Medium.ttf");
+}
+
+@font-face {
+	font-family: montserrat-medium;
+	src: url("..assets/fonts/Montserrat-Medium.ttf");
+}
+
+@font-face {
+	font-family: montserrat-regular;
+	src: url("..assets/fonts/Montserrat-Regular.ttf");
+}

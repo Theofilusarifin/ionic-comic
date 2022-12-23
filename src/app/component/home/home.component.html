@@ -1,3 +1,49 @@
-<p>
-  home works!
-</p>
+<ion-card-title class="ion-padding-start">Popular This Week</ion-card-title>
+<ion-content class="ion-padding" style="height: fit-content">
+  <ion-content style="border: 1px solid #eae9e8"></ion-content>
+</ion-content>
+<ion-slides [options]="pupolarOpt" class="ion-padding-top">
+  <ion-slide>
+    <ion-card>
+      <img
+        alt="Silhouette of mountains"
+        src="https://ionicframework.com/docs/img/demos/card-media.png"
+      />
+      <ion-card-header>
+        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ion-slide>
+</ion-slides>
+<ion-card-title class="ion-padding-start ion-padding-top"
+  >Latest Update</ion-card-title
+>
+<ion-content class="ion-padding" style="height: fit-content">
+  <ion-content style="border: 1px solid #eae9e8"></ion-content>
+</ion-content>
+
+<ion-grid style="padding: 0; margin: 0">
+  <ion-row class="ion-padding-top" style="margin: 0">
+    <ion-col size="6" style="padding: 0; margin: 0"
+      ><ion-card>
+        <img
+          alt="Silhouette of mountains"
+          src="https://ionicframework.com/docs/img/demos/card-media.png"
+        />
+        <ion-card-header style="padding-bottom: 0;">
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-grid style="padding: 0; margin: 0">
+            <ion-row style="padding: 10px 0px 5px 0px; margin: 0">
+              <ion-col size="12" style="padding: 0; margin: 0"><ion-badge color="tertiary">Chapther 1</ion-badge></ion-col>
+            </ion-row>
+            <ion-row style="padding: 0; margin: 0">
+              <ion-col size="12" style="padding: 0; margin: 0; font-size: 12px;">2 Months Ago</ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content> </ion-card
+    ></ion-col>
+  </ion-row>
+</ion-grid>
