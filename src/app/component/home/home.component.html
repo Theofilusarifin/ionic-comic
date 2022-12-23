@@ -2,15 +2,22 @@
 <ion-content class="ion-padding" style="height: fit-content">
   <ion-content style="border: 1px solid #eae9e8"></ion-content>
 </ion-content>
-<ion-slides [options]="pupolarOpt" class="ion-padding-top">
-  <ion-slide>
-    <ion-card>
+<ion-slides [options]="pupolarOpt" class="ion-padding-top" *ngIf="popular_comics">
+  <ion-slide *ngFor="let comic of popular_comics; let i = index">
+    <ion-card style="background: transparent;" routerLink='/comic/{{ comic.id }}'>
       <img
         alt="Silhouette of mountains"
-        src="https://ionicframework.com/docs/img/demos/card-media.png"
+        src="{{ comic.url_poster }}"
+        style="
+          max-width: 100%;
+          min-height: 240px;
+          max-height: 240px;
+          height: auto;
+          object-fit: cover;
+        "
       />
-      <ion-card-header>
-        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      <ion-card-header style="margin: 0; padding: 10px 0px 0px 0px; text-align: left; line-height: 1.5;">
+        <ion-card-subtitle>{{ comic.name }}</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
   </ion-slide>
@@ -30,20 +37,25 @@
           alt="Silhouette of mountains"
           src="https://ionicframework.com/docs/img/demos/card-media.png"
         />
-        <ion-card-header style="padding-bottom: 0;">
+        <ion-card-header style="padding-bottom: 0">
           <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
           <ion-grid style="padding: 0; margin: 0">
             <ion-row style="padding: 10px 0px 5px 0px; margin: 0">
-              <ion-col size="12" style="padding: 0; margin: 0"><ion-badge color="tertiary">Chapter 1</ion-badge></ion-col>
+              <ion-col size="12" style="padding: 0; margin: 0"
+                ><ion-badge color="tertiary">Chapter 1</ion-badge></ion-col
+              >
             </ion-row>
             <ion-row style="padding: 0; margin: 0">
-              <ion-col size="12" style="padding: 0; margin: 0; font-size: 12px;">2 Months Ago</ion-col>
+              <ion-col size="12" style="padding: 0; margin: 0; font-size: 12px"
+                >2 Months Ago</ion-col
+              >
             </ion-row>
           </ion-grid>
-        </ion-card-content> </ion-card
-    ></ion-col>
+        </ion-card-content>
+      </ion-card></ion-col
+    >
   </ion-row>
 </ion-grid>

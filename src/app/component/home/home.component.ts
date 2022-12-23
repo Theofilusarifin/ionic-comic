@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ComicService } from 'src/app/service/comic.service';
 
 @Component({
   selector: 'app-home',
@@ -6,8 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(public cs: ComicService) {}
 
+  ngOnInit() {
+    this.getPopular();
+  }
+
+  // Options for popular slides
   pupolarOpt = {
     direction: 'horizontal',
     slidesPerView: 2,
@@ -16,6 +22,13 @@ export class HomeComponent implements OnInit {
     },
   };
 
-
-  ngOnInit() {}
+  popular_comics = null;
+  async getPopular() {
+    this.cs.getPopular().subscribe((data) => {
+      if (data.result == 'success') {
+        this.popular_comics = data.comics;
+        console.log(this.popular_comics);
+      }
+    });
+  }
 }
