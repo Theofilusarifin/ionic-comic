@@ -1,3 +1,177 @@
-<p>
-  detailcomic works!
-</p>
+<!-- Bookmark and Title -->
+<ion-grid>
+  <ion-row class="ion-padding-horizontal">
+    <ion-col size="10">
+      <ion-card-title>{{ comic_name }}</ion-card-title>
+    </ion-col>
+    <ion-col size="2">
+      <ion-icon
+        *ngIf="!favorited"
+        name="bookmark-outline"
+        style="font-size: 40px"
+        color="tertiary"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="favorited"
+        name="bookmark"
+        style="font-size: 40px"
+        color="tertiary"
+      ></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<!-- Poster -->
+<ion-grid>
+  <ion-row class="ion-padding-horizontal">
+    <ion-col size="12">
+      <ion-img src="{{ comic_url_poster }}"></ion-img>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<!-- Comic Detail Section -->
+<ion-grid>
+  <!-- Rating -->
+  <ion-card>
+    <ion-row style="display: flex; align-items: center">
+      <ion-col size="7" style="display: flex; justify-content: center">
+        <!-- star 1 -->
+        <ion-icon
+          *ngIf="comic_avg_rating >= 1"
+          name="star"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="comic_avg_rating < 1"
+          name="star-outline"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <!-- Star 2 -->
+        <ion-icon
+          *ngIf="comic_avg_rating >= 2"
+          name="star"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="comic_avg_rating < 2"
+          name="star-outline"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <!-- Star 3 -->
+        <ion-icon
+          *ngIf="comic_avg_rating >= 3"
+          name="star"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="comic_avg_rating < 3"
+          name="star-outline"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <!-- Star 4 -->
+        <ion-icon
+          *ngIf="comic_avg_rating >= 4"
+          name="star"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="comic_avg_rating < 4"
+          name="star-outline"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <!-- Star 5 -->
+        <ion-icon
+          *ngIf="comic_avg_rating >= 5"
+          name="star"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="comic_avg_rating < 5"
+          name="star-outline"
+          style="font-size: 26px; padding: 0px 3px"
+          color="warning"
+        ></ion-icon>
+      </ion-col>
+      <ion-col size="5" class="ion-padding-start">
+        <h4 style="padding: 10px 0px 0px 0px; margin: 0">
+          {{ comic_avg_rating }} / 5
+        </h4>
+        <h4 style="padding: 5px 0px 10px 0px; margin: 0">
+          of {{ comic_total_favorite }} vote
+        </h4>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <!-- Comic Details -->
+    <ion-row>
+      <!-- Rating -->
+      <ion-col size="12" style="padding: 0; margin: 0">
+        <ion-card-header style="padding-bottom: 10px">
+          <h6 style="color: white; margin: 0; padding: 0">Rating</h6>
+        </ion-card-header>
+        <ion-card-content style="padding-bottom: 10px">
+          {{ comic_avg_rating }} / 5 of {{ comic_total_favorite }} vote
+        </ion-card-content>
+      </ion-col>
+      <!-- Author -->
+      <ion-col size="12" style="padding: 0; margin: 0">
+        <ion-card-header style="padding-bottom: 10px; padding-top: 0px">
+          <h6 style="color: white; margin: 0; padding: 0">Author</h6>
+        </ion-card-header>
+        <ion-card-content>
+          {{ comic_author }}
+        </ion-card-content>
+      </ion-col>
+      <!-- View -->
+      <ion-col size="12" style="padding: 0; margin: 0">
+        <ion-card-header style="padding-bottom: 10px; padding-top: 0px">
+          <h6 style="color: white; margin: 0; padding: 0">Total View</h6>
+        </ion-card-header>
+        <ion-card-content>
+          {{ comic_total_view }}
+        </ion-card-content>
+      </ion-col>
+      <!-- Status -->
+      <ion-col size="12" style="padding: 0; margin: 0">
+        <ion-card-header style="padding-bottom: 10px; padding-top: 0px">
+          <h6 style="color: white; margin: 0; padding: 0">Status</h6>
+        </ion-card-header>
+        <ion-card-content>
+          {{ comic_status }}
+        </ion-card-content>
+      </ion-col>
+      <!-- Status -->
+      <ion-col size="12" style="padding: 0; margin: 0">
+        <ion-card-header style="padding-bottom: 10px; padding-top: 0px">
+          <h6 style="color: white; margin: 0; padding: 0">Genre</h6>
+        </ion-card-header>
+        <ion-card-content>
+          <!-- List Genre -->
+          <ion-grid style="padding: 0; margin: 0" *ngIf="comic_genres">
+            <ion-row style="margin: 0">
+              <ion-col
+                size="4"
+                style="padding: 3px 15px 0px 0px; margin: 0"
+                *ngFor="let genre of comic_genres; let i = index"
+              >
+                <ion-badge
+                  color="tertiary"
+                  style="padding: 10px 0px; width: 100%"
+                  >{{ genre.name }}</ion-badge
+                >
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-grid>
