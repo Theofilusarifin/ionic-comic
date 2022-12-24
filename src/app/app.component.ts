@@ -37,6 +37,7 @@ export class AppComponent {
     await this.storage.create();
     this.username = await this.storage.get('username');
     this.email = await this.storage.get('email');
+    console.log(this.email);
   }
 
   showLogin() {
@@ -55,19 +56,26 @@ export class AppComponent {
 
   // Login Function
   login() {
-    this.us
-      .checkUser(this.login_email, this.login_password)
-      .subscribe((data) => {
-        console.log(data);
-        if (data['result'] == 'success') {
-          // Redirect to home
-          this.email = this.login_email;
-          this.username = data['username'];
-          this.router.navigate(['/home']);
-        } else {
-          this.login_error = data['message'];
-        }
-      });
+    if (this.login_email != "" && this.login_password != ""){
+      this.us
+        .checkUser(this.login_email, this.login_password)
+        .subscribe((data) => {
+          console.log(data);
+          if (data['result'] == 'success') {
+            // Redirect to home
+            this.email = this.login_email;
+            this.storage.set('email', this.login_email);
+            this.username = data['username'];
+            this.storage.set('username', data['username']);
+            this.router.navigate(['/home']);
+          } else {
+            this.login_error = data['message'];
+          }
+        });
+    }
+    else{
+      this.login_error = 'This credential does not match our records!';
+    }
   }
   // Register function
   register() {
@@ -82,7 +90,9 @@ export class AppComponent {
           if (data['result'] == 'success') {
             // Redirect to home
             this.email = this.register_email;
+            this.storage.set('email', this.register_email);
             this.username = this.register_username;
+            this.storage.set('username', this.register_username);
             this.router.navigate(['/home']);
           } else {
             this.register_error = data['message'];
@@ -142,7 +152,6 @@ export class AppComponent {
         }
       }
     }
-
     // Assign value
     return timePassed;
   };

@@ -1,12 +1,12 @@
 <ion-app *ngIf="!username">
   <ion-header>
     <ion-toolbar>
-      <ion-title *ngIf="is_login">Login</ion-title>
-      <ion-title *ngIf="is_register">Register</ion-title>
+      <ion-title [hidden]="is_register">Login</ion-title>
+      <ion-title [hidden]="is_login">Register</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content *ngIf="is_login">
+  <ion-content [hidden]="is_register">
     <ion-card
       class="ion-margin ion-padding-end"
       style="background: transparent"
@@ -43,7 +43,7 @@
     </ion-card>
   </ion-content>
 
-  <ion-content *ngIf="is_register">
+  <ion-content [hidden]="is_login">
     <ion-card class="ion-margin ion-padding-end" style="background: transparent">
       <ion-item style="cursor: pointer">
         <ion-input
