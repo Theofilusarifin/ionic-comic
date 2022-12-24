@@ -42,6 +42,7 @@ export class DetailcomicComponent implements OnInit {
   comic_total_comment = null;
   comic_total_favorite = null;
   comic_avg_rating: number = 0;
+  comic_total_rating: number = 0;
   rating_given: number = 0;
   favorited: boolean = false;
   comment_given: string = '';
@@ -72,6 +73,7 @@ export class DetailcomicComponent implements OnInit {
         this.comic_url_poster = data.comic.url_poster;
         this.comic_total_comment = data.all_comment;
         this.comic_total_favorite = data.favorite.total;
+        this.comic_total_rating = data.rating.banyak_rating;
         this.comic_avg_rating = Math.floor(
           parseFloat(
             (data.rating.total_rating / data.rating.banyak_rating).toFixed(2)
