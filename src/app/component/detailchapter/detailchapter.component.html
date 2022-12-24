@@ -1,3 +1,52 @@
-<p>
-  detailchapter works!
-</p>
+<!-- Title -->
+<ion-grid>
+  <ion-row class="ion-padding-horizontal">
+    <ion-col size="12">
+      <ion-card-title
+        >{{ comic_name }} - Chapter {{ chapter_number }}</ion-card-title
+      >
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<!-- Controller -->
+<ion-grid>
+  <ion-row class="ion-padding-horizontal">
+    <ion-col size="12">
+      <ion-chip color="tertiary" class="ion-padding"
+        >Use the left or right arrows to switch chapter</ion-chip
+      >
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-horizontal">
+    <ion-col size="6">
+      <ion-button size="small" color="tertiary"  routerLink="/home">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+
+      <ion-button size="small" style="margin-left: 7px;" color="tertiary" routerLink="/comic/{{comic_id}}">
+        <ion-icon name="information-circle"></ion-icon>
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="6" style="display: flex; justify-content: flex-end;">
+      <ion-button size="small" style="margin-right: 7px;" color="tertiary" *ngIf="chapter_number > 1" (click)="getPrev()">
+        <ion-icon name="caret-back-circle"></ion-icon>
+      </ion-button>
+
+      <ion-button size="small" color="tertiary" *ngIf="chapter_number < total_chapter" (click)="getNext()">
+        <ion-icon name="caret-forward-circle"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<!-- Pages -->
+<ion-grid>
+  <ion-row class="ion-padding-horizontal" *ngFor="let page of pages">
+    <ion-col size="12">
+      <ion-img src="{{ page.img_url }}"></ion-img>
+    </ion-col>
+  </ion-row>
+</ion-grid>

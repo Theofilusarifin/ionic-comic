@@ -18,4 +18,22 @@ export class ChapterService {
 
     return this.http.post(this.root + 'detailchapter.php', body);
   }
+
+  // Next Chapter Function
+  getNext(comic_id: number, chapter_now: number): Observable<any> {
+    let body = new HttpParams();
+    body = body.set('comic_id', comic_id);
+    body = body.set('chapter_now', chapter_now);
+
+    return this.http.post(this.root + 'nextchapter.php', body);
+  }
+
+  // Previous Chapter Function
+  getPrev(comic_id: number, chapter_now: number): Observable<any> {
+    let body = new HttpParams();
+    body = body.set('comic_id', comic_id);
+    body = body.set('chapter_now', chapter_now);
+
+    return this.http.post(this.root + 'prevchapter.php', body);
+  }
 }
