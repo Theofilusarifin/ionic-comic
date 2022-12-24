@@ -115,6 +115,54 @@ export class DetailcomicComponent implements OnInit {
     });
   }
 
+  // Add Favorite Comic
+  async addFavorite() {
+    this.us
+      .addFavorite(this.ac.email, this.comic_id)
+      .subscribe(async (data) => {
+        if (data.result == 'success') {
+          this.favorited = true;
+          const alert = await this.alertController.create({
+            header: 'Alert',
+            message: 'Favorite Added Successfuly!',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        } else {
+          const alert = await this.alertController.create({
+            header: 'Alert',
+            message: data.message,
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+      });
+  }
+
+  // Delete Favorite Comic
+  async deleteFavorite() {
+    this.us
+      .deleteFavorite(this.ac.email, this.comic_id)
+      .subscribe(async (data) => {
+        if (data.result == 'success') {
+          this.favorited = false;
+          const alert = await this.alertController.create({
+            header: 'Alert',
+            message: 'Favorite Deleted Successfuly!',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        } else {
+          const alert = await this.alertController.create({
+            header: 'Alert',
+            message: data.message,
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+      });
+  }
+
   // Add rating Comic
   async addRating(star_number: number) {
     this.us
@@ -188,9 +236,8 @@ export class DetailcomicComponent implements OnInit {
             await alert.present();
           }
         });
-    }
-    else{
-      alert("Please input a comment!")
+    } else {
+      alert('Please input a comment!');
     }
   }
 }

@@ -10,12 +10,14 @@
         name="bookmark-outline"
         style="font-size: 40px"
         color="tertiary"
+        (click) = "addFavorite()"
       ></ion-icon>
       <ion-icon
         *ngIf="favorited"
         name="bookmark"
         style="font-size: 40px"
         color="tertiary"
+        (click) = "deleteFavorite()"
       ></ion-icon>
     </ion-col>
   </ion-row>
