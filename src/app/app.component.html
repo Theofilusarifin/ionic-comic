@@ -7,7 +7,10 @@
   </ion-header>
 
   <ion-content *ngIf="is_login">
-    <ion-card class="ion-margin">
+    <ion-card
+      class="ion-margin ion-padding-end"
+      style="background: transparent"
+    >
       <ion-item style="cursor: pointer">
         <ion-input type="text" placeholder="Email" [(ngModel)]="login_email">
         </ion-input>
@@ -27,21 +30,21 @@
         expand="block"
         color="tertiary"
         (click)="login()"
-        class="ion-margin-horizontal"
+        class="ion-margin-start ion-margin-vertical"
         >Login</ion-button
       >
       <ion-chip *ngIf="login_error">{{ login_error }}</ion-chip>
-
-      <ion-item style="cursor: pointer">
-        <ion-label (click)="showRegister()" class="ion-text-center"
+      
+      <ion-item style="cursor: pointer" class="ion-text-center">
+        <h6 (click)="showRegister()" 
           >Don't have any Account? Register Now!
-        </ion-label>
+        </h6>
       </ion-item>
     </ion-card>
   </ion-content>
 
   <ion-content *ngIf="is_register">
-    <ion-card class="ion-margin">
+    <ion-card class="ion-margin ion-padding-end" style="background: transparent">
       <ion-item style="cursor: pointer">
         <ion-input
           type="text"
@@ -76,15 +79,15 @@
         expand="block"
         color="tertiary"
         (click)="register()"
-        class="ion-margin-horizontal"
+        class="ion-margin-start ion-margin-vertical"
         >Register</ion-button
       >
       <ion-chip *ngIf="register_error">{{ register_error }}</ion-chip>
 
-      <ion-item style="cursor: pointer">
-        <ion-label (click)="showLogin()" class="ion-text-center"
-          >Already have Account? Login Here!</ion-label
-        >
+      <ion-item style="cursor: pointer" class="ion-text-center">
+        <h6 (click)="showLogin()" 
+          >Already have Account? Login Here!
+        </h6>
       </ion-item>
     </ion-card>
   </ion-content>
