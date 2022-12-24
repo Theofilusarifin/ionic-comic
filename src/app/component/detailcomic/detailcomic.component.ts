@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { toArray } from 'rxjs';
 import { UserService } from 'src/app/service/user.service';
 import { AppComponent } from 'src/app/app.component';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-detailcomic',
@@ -15,15 +16,19 @@ export class DetailcomicComponent implements OnInit {
     public cs: ComicService,
     public us: UserService,
     public ac: AppComponent,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
     this.getDetail(this.route.snapshot.params['id']);
+    this.stars = Array(5)
+      .fill(4)
+      .map((x, i) => i+1); // [1,2,3,4,5]
   }
-
+  stars:number[] = []; 
   // Comic detail
-  comic_id = null;
+  comic_id:number = 0;
   first_chapter_id = null;
   last_chapter_id = null;
   comic_name = null;
@@ -35,6 +40,7 @@ export class DetailcomicComponent implements OnInit {
   comic_total_comment = null;
   comic_total_favorite = null;
   comic_avg_rating: number = 0;
+  rating_given: number = 0;
   favorited: boolean = false;
 
   // comic chapters
@@ -97,5 +103,31 @@ export class DetailcomicComponent implements OnInit {
         this.favorited = data.checked != '' ? true : false;
       }
     });
+  }
+
+  // Check Favorite Comic
+  async addRating(star_number: number) {
+    this.us
+      .addRating(this.ac.email, this.comic_id, star_number)
+      .subscribe(async (data) => {
+        if (data.result == 'success') {
+          this.rating_given = star_number;
+          const alert = await this.alertController.create({
+            header: 'Alert',
+            subHeader: 'Add Rating Successful',
+            message: 'Rating Added Successfuly!',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        } else {
+          const alert = await this.alertController.create({
+            header: 'Alert',
+            subHeader: 'Add Rating Failed',
+            message: data.message,
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+      });
   }
 }

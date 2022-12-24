@@ -34,71 +34,20 @@
     <ion-row style="display: flex; align-items: center">
       <!-- Rating -->
       <ion-col size="7" style="display: flex; justify-content: center">
-        <!-- star 1 -->
-        <ion-icon
-          *ngIf="comic_avg_rating >= 1"
-          name="star"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="comic_avg_rating < 1"
-          name="star-outline"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <!-- Star 2 -->
-        <ion-icon
-          *ngIf="comic_avg_rating >= 2"
-          name="star"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="comic_avg_rating < 2"
-          name="star-outline"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <!-- Star 3 -->
-        <ion-icon
-          *ngIf="comic_avg_rating >= 3"
-          name="star"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="comic_avg_rating < 3"
-          name="star-outline"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <!-- Star 4 -->
-        <ion-icon
-          *ngIf="comic_avg_rating >= 4"
-          name="star"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="comic_avg_rating < 4"
-          name="star-outline"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <!-- Star 5 -->
-        <ion-icon
-          *ngIf="comic_avg_rating >= 5"
-          name="star"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="comic_avg_rating < 5"
-          name="star-outline"
-          style="font-size: 26px; padding: 0px 3px"
-          color="warning"
-        ></ion-icon>
+        <div *ngFor="let star of stars">
+          <ion-icon
+            *ngIf="comic_avg_rating >= star"
+            name="star"
+            style="font-size: 26px; padding: 0px 3px"
+            color="warning"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="comic_avg_rating < star"
+            name="star-outline"
+            style="font-size: 26px; padding: 0px 3px"
+            color="warning"
+          ></ion-icon>
+        </div>
       </ion-col>
       <ion-col size="5" class="ion-padding-start">
         <h4 style="padding: 10px 0px 0px 0px; margin: 0">
@@ -277,10 +226,61 @@
     <h5 class="ion-padding-start ion-padding-top" style="color: white">
       Rating
     </h5>
-    <ion-card-content>
+    <ion-card-content style="padding-top: 0; padding-bottom: 0">
       Give your rating here
     </ion-card-content>
+    <!-- Rating Input -->
+    <ion-grid class="ion-margin-top">
+      <ion-row>
+        <ion-col size="12" style="display: flex; justify-content: center">
+          <div *ngFor="let star of stars">
+            <ion-icon
+              (click)="addRating(star)"
+              *ngIf="rating_given >= star"
+              name="star"
+              style="font-size: 34px; padding: 0px 8px"
+              color="warning"
+            ></ion-icon>
+            <ion-icon
+              (click)="addRating(star)"
+              *ngIf="rating_given < star"
+              name="star-outline"
+              style="font-size: 34px; padding: 0px 8px"
+              color="warning"
+            ></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col size="12" class="ion-margin-top" style="display: flex; justify-content: flex-end">
+          <a class="ion-margin-end" style="color: #6a64ff; text-decoration: none" routerLink="">
+            Reset rating
+          </a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     <!-- Comments -->
-    <h5 class="ion-padding-start" style="color: white">Comments</h5>
+    <h5 class="ion-padding-start" style="color: white; margin-bottom: 0">
+      Comments
+    </h5>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" style="padding: 0">
+          <ion-textarea
+            style="padding-left: 0; padding-bottom: 0; color: white;"
+            class="ion-padding-start"
+            rows="1"
+            placeholder="Enter your comment here..."
+          ></ion-textarea>
+        </ion-col>
+        <ion-col size="12" style="padding: 0; text-align: right">
+          <ion-button
+            class="ion-margin-end ion-margin-bottom"
+            color="tertiary"
+            style="padding: 5px 0px; display: absolute; top: 0; right: 20px"
+            >Comment</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- List Comments -->
   </ion-card>
 </ion-grid>

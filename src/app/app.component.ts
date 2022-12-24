@@ -37,7 +37,6 @@ export class AppComponent {
     await this.storage.create();
     this.username = await this.storage.get('username');
     this.email = await this.storage.get('email');
-    console.log(this.email);
   }
 
   showLogin() {
