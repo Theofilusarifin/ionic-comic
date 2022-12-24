@@ -5,6 +5,7 @@ import { toArray } from 'rxjs';
 import { UserService } from 'src/app/service/user.service';
 import { AppComponent } from 'src/app/app.component';
 import { AlertController } from '@ionic/angular';
+import { CommentService } from 'src/app/service/comment.service';
 
 @Component({
   selector: 'app-detailcomic',
@@ -14,6 +15,7 @@ import { AlertController } from '@ionic/angular';
 export class DetailcomicComponent implements OnInit {
   constructor(
     public cs: ComicService,
+    public cos: CommentService,
     public us: UserService,
     public ac: AppComponent,
     public route: ActivatedRoute,
@@ -24,11 +26,11 @@ export class DetailcomicComponent implements OnInit {
     this.getDetail(this.route.snapshot.params['id']);
     this.stars = Array(5)
       .fill(4)
-      .map((x, i) => i+1); // [1,2,3,4,5]
+      .map((x, i) => i + 1); // [1,2,3,4,5]
   }
-  stars:number[] = []; 
+  stars: number[] = [];
   // Comic detail
-  comic_id:number = 0;
+  comic_id: number = 0;
   first_chapter_id = null;
   last_chapter_id = null;
   comic_name = null;
@@ -42,6 +44,7 @@ export class DetailcomicComponent implements OnInit {
   comic_avg_rating: number = 0;
   rating_given: number = 0;
   favorited: boolean = false;
+  comment_given: string = '';
 
   // comic chapters
   comic_chapters = null;
@@ -82,6 +85,13 @@ export class DetailcomicComponent implements OnInit {
             );
           }
         );
+
+        // convert last update into proper string
+        data.comments.forEach(
+          (element: { [x: string]: string | number | Date }) => {
+            element['date'] = this.ac.last_update(element['date']);
+          }
+        );
         // comic chapters
         this.comic_chapters = data.chapters;
         // comic comments
@@ -105,7 +115,7 @@ export class DetailcomicComponent implements OnInit {
     });
   }
 
-  // Check Favorite Comic
+  // Add rating Comic
   async addRating(star_number: number) {
     this.us
       .addRating(this.ac.email, this.comic_id, star_number)
@@ -114,7 +124,6 @@ export class DetailcomicComponent implements OnInit {
           this.rating_given = star_number;
           const alert = await this.alertController.create({
             header: 'Alert',
-            subHeader: 'Add Rating Successful',
             message: 'Rating Added Successfuly!',
             buttons: ['OK'],
           });
@@ -122,12 +131,66 @@ export class DetailcomicComponent implements OnInit {
         } else {
           const alert = await this.alertController.create({
             header: 'Alert',
-            subHeader: 'Add Rating Failed',
             message: data.message,
             buttons: ['OK'],
           });
           await alert.present();
         }
       });
+  }
+
+  // Reset Rating Comic
+  async resetRating() {
+    this.us
+      .resetRating(this.ac.email, this.comic_id)
+      .subscribe(async (data) => {
+        if (data.result == 'success') {
+          this.rating_given = 0;
+          const alert = await this.alertController.create({
+            header: 'Alert',
+            message: 'Rating Reset Successfuly!',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        } else {
+          this.rating_given = 0;
+          const alert = await this.alertController.create({
+            header: 'Alert',
+            message: data.message,
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+      });
+  }
+
+  // Add Comment Comic
+  async addComment() {
+    if (this.comment_given != '') {
+      this.cos
+        .addComment(this.ac.email, this.comic_id, this.comment_given)
+        .subscribe(async (data) => {
+          this.getDetail(this.comic_id);
+          if (data.result == 'success') {
+            this.comment_given = '';
+            const alert = await this.alertController.create({
+              header: 'Alert',
+              message: 'Comment Added Successfuly!',
+              buttons: ['OK'],
+            });
+            await alert.present();
+          } else {
+            const alert = await this.alertController.create({
+              header: 'Alert',
+              message: data.message,
+              buttons: ['OK'],
+            });
+            await alert.present();
+          }
+        });
+    }
+    else{
+      alert("Please input a comment!")
+    }
   }
 }

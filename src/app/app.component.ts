@@ -55,7 +55,7 @@ export class AppComponent {
 
   // Login Function
   login() {
-    if (this.login_email != "" && this.login_password != ""){
+    if (this.login_email != '' && this.login_password != '') {
       this.us
         .checkUser(this.login_email, this.login_password)
         .subscribe((data) => {
@@ -71,8 +71,7 @@ export class AppComponent {
             this.login_error = data['message'];
           }
         });
-    }
-    else{
+    } else {
       this.login_error = 'This credential does not match our records!';
     }
   }
@@ -122,36 +121,29 @@ export class AppComponent {
   }
 
   // Converting datetime
-  last_update = (latest_update: string | number | Date) => {
-    let difference =
-      ((Number(new Date()) - Number(new Date(latest_update))) / 1000) | 0;
-    let timePassed = `${difference} seconds ago`;
+  last_update = (date: string | number | Date) => {
+    var today = new Date();
+    var input_date = new Date(date)
+    var comic_date = new Date(input_date.setHours(input_date.getHours() + 7));
 
-    if (difference >= 60) {
-      difference /= 60;
-      timePassed = `${difference | 0} minutes ago`;
+    var diffyear = today.getFullYear() - comic_date.getFullYear();
+    if (diffyear > 0) return diffyear + ' years ago';
 
-      if (difference >= 60) {
-        difference /= 60;
-        timePassed = `${difference | 0} hours ago`;
+    var diffmonth = today.getMonth() - comic_date.getMonth();
+    if (diffmonth > 0) return diffmonth + ' months ago';
 
-        if (difference >= 24) {
-          difference /= 24;
-          timePassed = `${difference | 0} days ago`;
+    var diffday = today.getDate() - comic_date.getDate();
+    if (diffday > 0) return diffday + ' days ago';
 
-          if (difference >= 30) {
-            difference /= 30;
-            timePassed = `${difference | 0} months ago`;
+    var diffhour = today.getHours() - comic_date.getHours();
+    if (diffhour > 0) return diffhour + ' hours ago';
 
-            if (difference >= 365) {
-              difference /= 365;
-              timePassed = `${difference | 0} years ago`;
-            }
-          }
-        }
-      }
-    }
-    // Assign value
-    return timePassed;
+    var diffmin = today.getMinutes() - comic_date.getMinutes();
+    if (diffmin > 0) return diffmin + ' minutes ago';
+
+    var diffsec = today.getSeconds() - comic_date.getSeconds();
+    if (diffsec > 0) return diffsec + ' seconds ago';
+
+    return 'Just released';
   };
 }
