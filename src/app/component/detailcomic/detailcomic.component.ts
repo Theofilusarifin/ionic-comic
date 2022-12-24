@@ -27,6 +27,7 @@ export class DetailcomicComponent implements OnInit {
     this.stars = Array(5)
       .fill(4)
       .map((x, i) => i + 1); // [1,2,3,4,5]
+    console.log(this.comic_comments)
   }
   stars: number[] = [];
   // Comic detail
@@ -73,12 +74,18 @@ export class DetailcomicComponent implements OnInit {
         this.comic_url_poster = data.comic.url_poster;
         this.comic_total_comment = data.all_comment;
         this.comic_total_favorite = data.favorite.total;
-        this.comic_total_rating = data.rating.banyak_rating;
-        this.comic_avg_rating = Math.floor(
-          parseFloat(
-            (data.rating.total_rating / data.rating.banyak_rating).toFixed(2)
-          )
-        );
+        if (data.rating.total_rating > 0 && data.rating.banyak_rating>0){
+          this.comic_total_rating = data.rating.banyak_rating;
+          this.comic_avg_rating = Math.floor(
+            parseFloat(
+              (data.rating.total_rating / data.rating.banyak_rating).toFixed(2)
+            )
+          );
+        }
+        else{
+          this.comic_total_rating = 0;
+          this.comic_avg_rating = 0
+        }
         // convert last update into proper string
         data.chapters.forEach(
           (element: { [x: string]: string | number | Date }) => {
