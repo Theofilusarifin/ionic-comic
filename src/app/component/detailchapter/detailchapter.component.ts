@@ -30,7 +30,6 @@ export class DetailchapterComponent implements OnInit {
   // Get Pages Detail
   async getDetail(comic_id: number, chapter_id: number) {
     this.chs.getById(comic_id, chapter_id).subscribe((data) => {
-      console.log(data);
       if (data.result == 'success') {
         this.pages = data.pages;
         this.comic_id = data.comic.id;
@@ -44,7 +43,6 @@ export class DetailchapterComponent implements OnInit {
   // Get Next Chapter
   async getNext() {
     this.chs.getNext(this.comic_id, this.chapter_number).subscribe((data) => {
-      console.log(data);
       if (data.result == 'success') {
         this.router.navigate([
           '/comic/' + this.comic_id + '/chapter/' + data.chapter.id,
@@ -57,7 +55,6 @@ export class DetailchapterComponent implements OnInit {
   // Get Next Chapter
   async getPrev() {
     this.chs.getPrev(this.comic_id, this.chapter_number).subscribe((data) => {
-      console.log(data);
       if (data.result == 'success') {
         this.router.navigate([
           '/comic/' + this.comic_id + '/chapter/' + data.chapter.id,

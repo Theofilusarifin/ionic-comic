@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit {
         );
         // Assign Data
         this.popular_comics = data.comics;
-        console.log(this.popular_comics);
       }
     });
   }

@@ -27,7 +27,6 @@ export class DetailcomicComponent implements OnInit {
     this.stars = Array(5)
       .fill(4)
       .map((x, i) => i + 1); // [1,2,3,4,5]
-    console.log(this.comic_comments)
   }
   stars: number[] = [];
   // Comic detail
@@ -59,7 +58,6 @@ export class DetailcomicComponent implements OnInit {
   // Get Favorite Comic
   async getDetail(comic_id: number) {
     this.cs.getById(comic_id).subscribe((data) => {
-      console.log(data);
       if (data.result == 'success') {
         // Assign Data
         // Comic detail

@@ -59,7 +59,6 @@ export class AppComponent {
       this.us
         .checkUser(this.login_email, this.login_password)
         .subscribe((data) => {
-          console.log(data);
           if (data['result'] == 'success') {
             // Redirect to home
             this.email = this.login_email;

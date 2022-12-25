@@ -26,7 +26,6 @@ export class DetailgenreComponent implements OnInit {
 
   async getComic(genre_id: number) {
     this.gs.getById(genre_id).subscribe((data) => {
-      console.log(data);
       if (data.result == 'success') {
         // convert last update into proper string
         data.comics.forEach(
