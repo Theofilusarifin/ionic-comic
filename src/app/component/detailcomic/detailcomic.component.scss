@@ -3,6 +3,11 @@ hr {
   border: 0;
   border-top: 2px solid rgba(255, 255, 255, 0.4);
 }
+hr.comment {
+  margin: 0px 15px 20px 0px;
+  border: 0;
+  border-top: 2px solid rgba(255, 255, 255, 0.4);
+}
 /* iOS places the subtitle above the title */
 ion-card-subtitle {
   color: white;

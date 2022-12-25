@@ -10,14 +10,14 @@
         name="bookmark-outline"
         style="font-size: 40px"
         color="tertiary"
-        (click) = "addFavorite()"
+        (click)="addFavorite()"
       ></ion-icon>
       <ion-icon
         *ngIf="favorited"
         name="bookmark"
         style="font-size: 40px"
         color="tertiary"
-        (click) = "deleteFavorite()"
+        (click)="deleteFavorite()"
       ></ion-icon>
     </ion-col>
   </ion-row>
@@ -294,30 +294,84 @@
       </ion-row>
     </ion-grid>
 
-    <ion-grid class="ion-padding-bottom">
+    <ion-grid class="ion-padding-bottom" *ngIf="comic_total_comment > 0">
       <!-- List Comments -->
       <h5 class="ion-padding-start" style="color: white; margin-bottom: 0">
         List Comment
       </h5>
-      <!-- <ion-text class="ion-padding-start ion-margin-bottom" *ngif="comic_total_comment == 0">
-        There are no comment.
-      </ion-text> -->
-
       <ion-row class="ion-padding" *ngFor="let comment of comic_comments">
-        <ion-col size="3">
+        <ion-col size="2">
           <ion-avatar>
             <img
               src="https://ionicframework.com/docs/img/demos/avatar.svg"
+              style="max-width: 80%; height: auto"
             />
           </ion-avatar>
         </ion-col>
 
-        <ion-col size="9">
-          <ion-label>
-            <h2>{{comment.username}}</h2>
-            <h3 class="ion-padding-bottom">{{comment.date}}</h3>
-            <p>{{comment.text}}</p>
+        <ion-col size="10" class="ion-padding-top">
+          <ion-label class="ion-margin-bottom">
+            <h2 style="color: white">{{ comment.username }}</h2>
+            <h3 class="ion-padding-bottom">{{ comment.date }}</h3>
+            <p style="color: white">{{ comment.text }}</p>
           </ion-label>
+          <ion-label style="display: flex; justify-content: flex-end">
+            <ion-button fill="clear" color="tertiary" (click)="showReply(comment.id)">Reply</ion-button>
+          </ion-label>
+
+          <!-- Reply Comment Section -->
+          <ion-grid *ngIf="comment.id == comment_selected_id">
+            <ion-row>
+              <ion-col size="12" style="padding: 0">
+                <ion-textarea
+                  style="padding-left: 0; padding-bottom: 0; color: white"
+                  class="ion-padding-start"
+                  rows="1"
+                  placeholder="Enter your reply here..."
+                  [(ngModel)]="reply_given"
+                ></ion-textarea>
+              </ion-col>
+              <ion-col size="12" style="padding: 0; text-align: right">
+                <ion-button
+                  class="ion-margin-end ion-margin-bottom"
+                  color="tertiary"
+                  style="
+                    padding: 5px 0px;
+                    display: absolute;
+                    top: 0;
+                    right: 20px;
+                  "
+                  (click)="addReply()"
+                  >Comment</ion-button
+                >
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <hr class="comment" />
+          <!-- Replies -->
+          <ion-grid *ngIf="comment.replies">
+            <h6 style="color: rgb(109, 106, 106); margin: 0">Replies</h6>
+            <ion-row
+              class="ion-margin-top"
+              *ngFor="let reply of comment.replies"
+            >
+              <ion-col size="2">
+                <ion-avatar>
+                  <img
+                    style="max-width: 70%; height: auto"
+                    src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                  />
+                </ion-avatar>
+              </ion-col>
+              <ion-col size="10" class="ion-padding-start">
+                <ion-label>
+                  <h2 style="color: white">{{ reply.username }}</h2>
+                  <h3 class="ion-padding-bottom">{{ reply.date }}</h3>
+                  <p style="color: white">{{ reply.text }}</p>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-col>
       </ion-row>
     </ion-grid>

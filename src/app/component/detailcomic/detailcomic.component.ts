@@ -39,7 +39,8 @@ export class DetailcomicComponent implements OnInit {
   comic_summary = null;
   comic_total_view = null;
   comic_url_poster = null;
-  comic_total_comment = null;
+  comic_total_comment: number = 0;
+  comic_total_reply: number = 0;
   comic_total_favorite = null;
   comic_avg_rating: number = 0;
   comic_total_rating: number = 0;
@@ -47,14 +48,18 @@ export class DetailcomicComponent implements OnInit {
   favorited: boolean = false;
   comment_given: string = '';
 
+  // Reply
+  comment_selected_id: number = 0;
+  reply_given: string = '';
+
   // comic chapters
   comic_chapters = null;
   // comic comments
-  comic_comments = null;
+  comic_comments: any = null;
   // Comic genres
   comic_genres = null;
   // Comic replies
-  comic_replies = null;
+  comic_replies: any = null;
   // Get Favorite Comic
   async getDetail(comic_id: number) {
     this.cs.getById(comic_id).subscribe((data) => {
@@ -72,17 +77,16 @@ export class DetailcomicComponent implements OnInit {
         this.comic_url_poster = data.comic.url_poster;
         this.comic_total_comment = data.all_comment;
         this.comic_total_favorite = data.favorite.total;
-        if (data.rating.total_rating > 0 && data.rating.banyak_rating>0){
+        if (data.rating.total_rating > 0 && data.rating.banyak_rating > 0) {
           this.comic_total_rating = data.rating.banyak_rating;
           this.comic_avg_rating = Math.floor(
             parseFloat(
               (data.rating.total_rating / data.rating.banyak_rating).toFixed(2)
             )
           );
-        }
-        else{
+        } else {
           this.comic_total_rating = 0;
-          this.comic_avg_rating = 0
+          this.comic_avg_rating = 0;
         }
         // convert last update into proper string
         data.chapters.forEach(
@@ -99,6 +103,13 @@ export class DetailcomicComponent implements OnInit {
             element['date'] = this.ac.last_update(element['date']);
           }
         );
+
+        // convert last update into proper string
+        data.replies.forEach(
+          (element: { [x: string]: string | number | Date }) => {
+            element['date'] = this.ac.last_update(element['date']);
+          }
+        );
         // comic chapters
         this.comic_chapters = data.chapters;
         // comic comments
@@ -107,7 +118,33 @@ export class DetailcomicComponent implements OnInit {
         this.comic_genres = data.genres;
         // Comic replies
         this.comic_replies = data.replies;
+        this.comic_total_reply = data.replies.length;
 
+        // Assign replies to comment
+        if (data.comments !== null) {
+          let i = 0;
+          data.comments.forEach((comment: any) => {
+            if (data.replies !== null) {
+              let temp_replies: any[] = [];
+              data.replies.forEach((reply: any) => {
+                if (comment.id == reply.comment_id) {
+                  temp_replies.push(reply);
+                }
+              });
+              if (temp_replies.length > 0) {
+                this.comic_comments[i] = Object.assign(
+                  {},
+                  this.comic_comments[i],
+                  {
+                    replies: temp_replies,
+                  }
+                );
+              }
+            }
+            i++;
+          });
+          console.log(this.comic_comments);
+        }
         this.checkFavorite(this.ac.email, this.comic_id);
       }
     });
@@ -225,8 +262,8 @@ export class DetailcomicComponent implements OnInit {
       this.cos
         .addComment(this.ac.email, this.comic_id, this.comment_given)
         .subscribe(async (data) => {
-          this.getDetail(this.comic_id);
           if (data.result == 'success') {
+            this.getDetail(this.comic_id);
             this.comment_given = '';
             const alert = await this.alertController.create({
               header: 'Alert',
@@ -245,6 +282,52 @@ export class DetailcomicComponent implements OnInit {
         });
     } else {
       alert('Please input a comment!');
+    }
+  }
+
+  // Show Reply Section
+  async showReply(comic_id: number) {
+    if (comic_id == this.comment_selected_id) {
+      // Close Section
+      this.comment_selected_id = 0;
+    } else {
+      // Open Section
+      this.comment_selected_id = comic_id;
+    }
+  }
+
+  // Add Reply Comic
+  async addReply() {
+    if (this.reply_given != '') {
+      this.cos
+        .addReply(
+          this.ac.email,
+          this.comment_selected_id,
+          this.comic_id,
+          this.reply_given
+        )
+        .subscribe(async (data) => {
+          if (data.result == 'success') {
+            this.getDetail(this.comic_id);
+            this.comment_selected_id = 0;
+            this.reply_given = '';
+            const alert = await this.alertController.create({
+              header: 'Alert',
+              message: 'Reply Added Successfuly!',
+              buttons: ['OK'],
+            });
+            await alert.present();
+          } else {
+            const alert = await this.alertController.create({
+              header: 'Alert',
+              message: data.message,
+              buttons: ['OK'],
+            });
+            await alert.present();
+          }
+        });
+    } else {
+      alert('Please input a reply!');
     }
   }
 }
